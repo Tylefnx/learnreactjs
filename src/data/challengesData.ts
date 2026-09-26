@@ -272,7 +272,7 @@ export const CHALLENGES_DATA_TR: ChallengeItem[] = [
 export const CHALLENGES_DATA_EN: ChallengeItem[] = [
   {
     id: 'ch-use-debounce',
-    title: '1. Build a `useDebounce` Custom Hook',
+    title: '1. Build useDebounce Custom Hook',
     category: 'Hooks',
     difficulty: 'Intermediate',
     description: 'Create a custom `useDebounce` hook that delays updating a state value until a specified delay (ms) has passed, properly cleaning up pending timers on consecutive changes.',
@@ -339,7 +339,7 @@ export const CHALLENGES_DATA_EN: ChallengeItem[] = [
   },
   {
     id: 'ch-stale-counter',
-    title: '2. Fix Stale Closure in Auto-Incrementing Counter',
+    title: '2. Fix Stale Closure in Counter',
     category: 'Hooks',
     difficulty: 'Beginner',
     description: 'The `Timer` component below aims to increment every 1 second. However, due to a stale closure trap, `count` gets stuck at 1. Fix it using idiomatic React functional updater patterns.',
@@ -415,7 +415,7 @@ export const CHALLENGES_DATA_EN: ChallengeItem[] = [
   },
   {
     id: 'ch-use-previous',
-    title: '3. Build a `usePrevious` Hook (Capture Previous Render State)',
+    title: '3. Build usePrevious Hook',
     category: 'Hooks',
     difficulty: 'Intermediate',
     description: 'Implement a `usePrevious` hook using `useRef` and `useEffect` to store and return the prop or state value from the previous render.',

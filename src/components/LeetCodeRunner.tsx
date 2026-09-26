@@ -241,25 +241,44 @@ export const LeetCodeRunner: React.FC = () => {
         </div>
       )}
 
-      {/* Challenge Selector */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-        {challengeList.map((ch) => {
+      {/* Challenge Selector Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        {challengeList.map((ch, idx) => {
           const isSelected = ch.id === selectedChallengeId;
+          const diffStr = (ch.difficulty || '').toLowerCase();
+          const isBeginner = diffStr.includes('başlangıç') || diffStr.includes('beginner');
+          const isInter = diffStr.includes('orta') || diffStr.includes('intermediate');
+          const diffColor = isBeginner
+            ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
+            : isInter
+            ? 'bg-amber-500/15 text-amber-400 border-amber-500/30'
+            : 'bg-rose-500/15 text-rose-400 border-rose-500/30';
+
           return (
             <button
               key={ch.id}
               onClick={() => setSelectedChallengeId(ch.id)}
-              className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+              className={`p-3.5 rounded-2xl border text-left transition-all duration-200 flex flex-col justify-between space-y-2.5 group cursor-pointer ${
                 isSelected
-                  ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20 font-bold scale-[1.02]'
-                  : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+                  ? 'bg-gradient-to-br from-cyan-950/60 via-slate-900 to-slate-900 border-cyan-500/80 shadow-lg shadow-cyan-500/10 ring-1 ring-cyan-500/40 scale-[1.01]'
+                  : 'bg-slate-900/60 border-slate-800/80 hover:border-slate-700 hover:bg-slate-900/90'
               }`}
             >
-              <FileCode2 className={`w-4 h-4 ${isSelected ? 'text-slate-950' : 'text-cyan-400'}`} />
-              <span>{ch.title}</span>
-              <span className="text-[10px] px-1.5 py-0.2 rounded font-mono bg-slate-950 text-slate-300">
-                {ch.difficulty}
-              </span>
+              <div className="flex items-center justify-between w-full">
+                <span className="text-[11px] font-mono font-bold text-cyan-400 bg-cyan-950/60 border border-cyan-800/40 px-2 py-0.5 rounded-md">
+                  #{idx + 1} {ch.category}
+                </span>
+                <span className={`text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md border ${diffColor}`}>
+                  {ch.difficulty}
+                </span>
+              </div>
+
+              <div className="flex items-start space-x-2">
+                <FileCode2 className={`w-4 h-4 shrink-0 mt-0.5 ${isSelected ? 'text-cyan-400' : 'text-slate-500 group-hover:text-slate-300'}`} />
+                <h4 className={`text-xs font-bold leading-snug line-clamp-2 ${isSelected ? 'text-white' : 'text-slate-300 group-hover:text-white'}`}>
+                  {ch.title.replace(/^\d+\.\s*/, '')}
+                </h4>
+              </div>
             </button>
           );
         })}
