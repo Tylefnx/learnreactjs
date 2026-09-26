@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && cp -r dist/* . && git add -A && git commit -m \"deploy: publish update\" && git push origin main"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",
