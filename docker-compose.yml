@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # 1. Frontend Web App (Vite + Nginx + SPA Proxy)
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: react-hub-web
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      compiler-api:
+        condition: service_healthy
+    networks:
+      - react-network
+
+  # 2. Real TSX/JSX Compiler & Test Runner Engine (esbuild + Node VM Sandbox)
+  compiler-api:
+    build:
+      context: ./react-compiler-server
+      dockerfile: Dockerfile
+    container_name: react-hub-compiler-api
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3001/api/health | grep -q '\"status\":\"UP\"' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    networks:
+      - react-network
+
+networks:
+  react-network:
+    driver: bridge
